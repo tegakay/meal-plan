@@ -18,9 +18,9 @@ type Meal = {
 
 const getMealPlan = async (pref: MealPlan) => {
   let { diet, exclude, targetCalories } = pref;
-  !diet ? (diet = "") : diet;
-  !exclude ? (exclude = "") : exclude;
-  !targetCalories ? (targetCalories = "2000") : targetCalories;
+  diet = !diet ? (diet = "") : diet;
+  exclude = !exclude ? (exclude = "") : exclude;
+  targetCalories = !targetCalories ? (targetCalories = "2000") : targetCalories;
   const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&diet=${diet}&exclude=${exclude}&targetCalories=${targetCalories}&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`;
   const res = await fetch(url);
 

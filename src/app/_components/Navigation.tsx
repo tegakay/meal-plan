@@ -48,6 +48,8 @@ const Navigation = () => {
   });
   if (session) {
     navArray.push(signout_);
+  } else{
+    navArray.push(<></>)
   }
 
   return (

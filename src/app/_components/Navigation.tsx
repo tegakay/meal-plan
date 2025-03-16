@@ -32,7 +32,7 @@ const Navigation = () => {
   const pathname = usePathname();
   const navigationItems = session ? authenticatedNavigationItems : noAUth;
 
-  let navArray = navigationItems.map((item) => {
+  const navArray = navigationItems.map((item) => {
     return (
       <li key={item.name}>
         <Link

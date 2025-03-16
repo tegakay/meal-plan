@@ -49,7 +49,7 @@ const Navigation = () => {
   if (session) {
     navArray.push(signout_);
   } else{
-    navArray.push(<li className="hidden"> mov</li>)
+    navArray.push(<li className="hidden" key="hidden"> mov</li>)
   }
 
   return (

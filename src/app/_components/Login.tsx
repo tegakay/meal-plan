@@ -1,21 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+
 import { signIn } from "next-auth/react";
 
 const Login: React.FC = () => {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle login logic here (e.g., call your API)
-    console.log("Logging in with", email, password);
-    // On success, you might redirect the user:
-    // router.push('/dashboard');
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   // Handle login logic here (e.g., call your API)
+    
+  //   // On success, you might redirect the user:
+  //   // router.push('/dashboard');
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center py-40 bg-gray-100">
@@ -67,7 +66,7 @@ const Login: React.FC = () => {
           onClick={() => signIn("github")}
           className="cursor-pointer w-full bg-[#24292E] text-white py-2 rounded hover:bg-opacity-75 transition duration-200"
         >
-          Sign in with GitHub"
+          Sign in with GitHub
         </button>
       </div>
     </div>

@@ -4,6 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import Link from "next/link";
 
+type Meal = {
+  id: number;
+  title: string;
+  image: string;
+}
+
 const fetchMeals = async (ingredients: string) => {
   const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`;
   console.log("url", url);
@@ -12,13 +18,12 @@ const fetchMeals = async (ingredients: string) => {
   return res.json();
 };
 
+
 export default function DashboardPage() {
-  const [diet, setDiet] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [queryEnabled, setQueryEnabled] = useState(false);
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["mealplan",  ingredients],
+    queryKey: ["mealplan", ingredients],
     queryFn: () => fetchMeals(ingredients),
     enabled: false,
   });
@@ -27,7 +32,6 @@ export default function DashboardPage() {
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
 
-    setQueryEnabled(true);
     refetch();
   };
 
@@ -69,11 +73,11 @@ export default function DashboardPage() {
       </form>
 
       {isLoading && <p className="mt-4 text-blue-500">Loading meal plan...</p>}
-      {/* {error && <p className="mt-4 text-red-500">Error: {error.message}</p>} */}
+      {error && <p className="mt-4 text-red-500">Error: {error.message}</p>}
 
       {/* Meal Plan Results */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-        {data?.map((meal: any) => (
+        {data?.map((meal: Meal) => (
           <div
             key={meal.id}
             className="bg-white shadow-lg rounded-2xl overflow-hidden transform transition duration-300 hover:scale-105"

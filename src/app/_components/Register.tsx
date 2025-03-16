@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // For Next.js 13 app router
+
 
 const Register: React.FC = () => {
-  const router = useRouter();
+  
   const [username, setUsername] = useState('');
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');

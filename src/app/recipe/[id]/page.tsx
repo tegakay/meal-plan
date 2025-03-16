@@ -38,7 +38,7 @@ export default async function RecipePage({ params }: {params: Promise<{ id:strin
       {/* Ingredients List */}
       <h2 className="text-lg font-semibold mt-6">Ingredients:</h2>
       <ul className="list-disc pl-5 text-gray-600">
-        {recipe.extendedIngredients.map((ing: { id: number; original: string; [key: string]: any }) => (
+        {recipe.extendedIngredients.map((ing: { id: number; original: string; [key: string]: string | number | boolean | undefined }) => (
           <li key={ing.id}>{ing.original}</li>
         ))}
       </ul>
@@ -47,7 +47,7 @@ export default async function RecipePage({ params }: {params: Promise<{ id:strin
       <h2 className="text-lg font-semibold mt-6">Instructions:</h2>
       {instructions.length > 0 ? (
         <ol className="list-decimal list-inside space-y-2">
-          {instructions[0].steps.map((step: { number: number; step: string; [key: string]: any }) => (
+          {instructions[0].steps.map((step: { number: number; step: string; [key: string]: string | number | boolean | undefined }) => (
             <li key={step.number}>{step.step}</li>
           ))}
         </ol>

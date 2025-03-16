@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -11,20 +11,26 @@ const authenticatedNavigationItems = [
   { name: "Meal Plan", href: "/meal-plan" },
   { name: "About", href: "/about" },
 ];
-const noAUth = [ { name: "About", href: "/about" }, { name: "Sign in", href: "/" }];
+const noAUth = [
+  { name: "About", href: "/about" },
+  { name: "Sign in", href: "/" },
+];
 const signout_ = (
   <li key="signout">
-    <button onClick={() => signOut()} className="px-4 py-2 rounded  text-white cursor-pointer">
+    <button
+      onClick={() => signOut()}
+      className="px-4 py-2 rounded  text-white cursor-pointer"
+    >
       Sign out
     </button>
   </li>
 );
 
 const Navigation = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  let navigationItems = session ? authenticatedNavigationItems : noAUth;
+  const navigationItems = session ? authenticatedNavigationItems : noAUth;
 
   let navArray = navigationItems.map((item) => {
     return (
@@ -40,8 +46,9 @@ const Navigation = () => {
       </li>
     );
   });
-  
-  session ? navArray.push(signout_):'';
+  if (session) {
+    navArray.push(signout_);
+  }
 
   return (
     <ul className="flex space-x-6 justify-center items-center">

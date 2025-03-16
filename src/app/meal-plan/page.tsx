@@ -2,18 +2,26 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import MealPlanCard from "../_components/MealPlanCard";
-import { isLoading, mealplanweek } from "../db/dm";
+
 
 type MealPlan = {
   diet: string;
   exclude: string;
   targetCalories: string;
 };
+type Meal = {
+  id: number;
+  title: string;
+  image: string;
+  sourceUrl: string;
+}
 
 const getMealPlan = async (pref: MealPlan) => {
-  const { diet, exclude, targetCalories } = pref;
-  let url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&diet=${diet}&exclude=${exclude}&targetCalories=${targetCalories}&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`;
+  let { diet, exclude, targetCalories } = pref;
+  !diet ? (diet = "") : diet;
+  !exclude ? (exclude = "") : exclude;
+  !targetCalories ? (targetCalories = "2000") : targetCalories;
+  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&diet=${diet}&exclude=${exclude}&targetCalories=${targetCalories}&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`;
   const res = await fetch(url);
 
   if (!res.ok) return null; // Handle errors gracefully
@@ -42,7 +50,7 @@ export default function MealPlanPage() {
     refetch();
   };
  
-
+console.log('data',data)
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Weekly Meal Plan</h1>
@@ -109,7 +117,7 @@ export default function MealPlanPage() {
           {Object.keys(data.week).map((day) => (
             <div key={day} className="p-4 border rounded-md">
               <h2 className="font-semibold">{day.toUpperCase()}</h2>
-              {data.week[day].meals.map((meal: any) => (
+              {data.week[day].meals.map((meal: Meal) => (
                 <div key={meal.id} className="mt-2">
                   <p>{meal.title}</p>
                   <a

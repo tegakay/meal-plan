@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { data, isLoading, error } from "../db/dm";
+
 import Link from "next/link";
 
 const fetchMeals = async (ingredients: string) => {
@@ -17,18 +17,18 @@ export default function DashboardPage() {
   const [ingredients, setIngredients] = useState("");
   const [queryEnabled, setQueryEnabled] = useState(false);
 
-  // const { data, isLoading, error, refetch } = useQuery({
-  //   queryKey: ["mealplan",  ingredients],
-  //   queryFn: () => fetchMeals(ingredients),
-  //   enabled: false,
-  // });
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["mealplan",  ingredients],
+    queryFn: () => fetchMeals(ingredients),
+    enabled: false,
+  });
   // console.log('mumble',data,isLoading,error,refetch)
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
 
     setQueryEnabled(true);
-    // refetch();
+    refetch();
   };
 
   return (

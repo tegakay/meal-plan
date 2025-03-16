@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { instructions,recipe } from "@/app/db/dm";
+
 
 const fetchRecipe = async (id: string) => {
   const res = await fetch(
@@ -22,11 +22,11 @@ async function fetchRecipeInstructions(recipeId: string) {
 
 export default async function RecipePage({ params }: {params: Promise<{ id:string }>}) {
   const {id} = await params
-  // const recipe = await fetchRecipe(id);
-  // console.log('recipe',recipe)
+  const recipe = await fetchRecipe(id);
+ 
   
-  // const instructions = await fetchRecipeInstructions(id);
-  // console.log('instructions',instructions)
+  const instructions = await fetchRecipeInstructions(id);
+  
 
   if (!recipe) return notFound(); // Show Next.js 404 page if recipe is missing
 
@@ -38,7 +38,7 @@ export default async function RecipePage({ params }: {params: Promise<{ id:strin
       {/* Ingredients List */}
       <h2 className="text-lg font-semibold mt-6">Ingredients:</h2>
       <ul className="list-disc pl-5 text-gray-600">
-        {recipe.extendedIngredients.map((ing: any) => (
+        {recipe.extendedIngredients.map((ing: { id: number; original: string; [key: string]: any }) => (
           <li key={ing.id}>{ing.original}</li>
         ))}
       </ul>
@@ -47,7 +47,7 @@ export default async function RecipePage({ params }: {params: Promise<{ id:strin
       <h2 className="text-lg font-semibold mt-6">Instructions:</h2>
       {instructions.length > 0 ? (
         <ol className="list-decimal list-inside space-y-2">
-          {instructions[0].steps.map((step: any) => (
+          {instructions[0].steps.map((step: { number: number; step: string; [key: string]: any }) => (
             <li key={step.number}>{step.step}</li>
           ))}
         </ol>
